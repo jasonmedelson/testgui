@@ -1,1 +1,1 @@
-web: gunicorn InfluencerGUI.wsgi
+web: gunicorn testgui.wsgi
