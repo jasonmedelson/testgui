@@ -1,9 +1,13 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
-from mainApp.models import Influencer, Events, Tags, List
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect, get_object_or_404 #redering html pages to display or pointing to other view
+from django.http import HttpResponse, HttpResponseRedirect # pure http HttpResponse
+from mainApp.models import Influencer, Events, Tags, List # Custom models
+from django.contrib.auth import login, authenticate #for login, registration view
+from django.contrib.auth.forms import UserCreationForm #Django Forms
+from .forms import InfluencerCreateForm, TagFormCSV, EventFormCSV, TagForm, EventForm, ListCreateForm, InfluencerCSVForm #custom forms
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required #login_required view decorator
+from django.views.generic.edit import CreateView, DeleteView, UpdateView #Django Class based generic views
+from django.utils.html import strip_tags #strip html from user input
 
 
 def signup(request):
@@ -125,3 +129,153 @@ def index(request):
         './index.html',
         context={'info':zipped}
     )
+
+# create a new Influencer instance
+@login_required
+def InfluencerCreate(request):
+    if request.method == 'POST':
+        form = InfluencerCreateForm( request.user, request.POST, )
+        if form.is_valid():
+            influencer = form.save(commit=False)
+            influencer.user = request.user
+            influencer.save()
+            return redirect('index')
+    else:
+        form = InfluencerCreateForm(request.user)
+    return render(request, 'mainApp/influencer_form.html', {'form': form})
+
+# edit an Influencer instance
+@login_required
+def InfluencerUpdate(request, pk):
+    object = Influencer.objects.get(id = pk)
+    if request.method == 'POST':
+        form = InfluencerCreateForm( request.user, request.POST, instance = object, )
+        if form.is_valid():
+            influencer = form.save(commit=True)
+            return redirect('index')
+    else:
+        form = InfluencerCreateForm(request.user, instance = object, )
+    edit = form['influencer_handle'].value()
+    print('e',edit)
+    context = {
+        'form':form,
+        'edit':edit,
+        'pk':pk
+    }
+    return render(request, 'mainApp/influencer_form.html', context)
+
+# Delete Influencer instance
+class InfluencerDelete(DeleteView):
+    template_name = 'delete.html'
+    model = Influencer
+    success_url = reverse_lazy('index')
+
+#Create multiple influencer instances from csv data
+@login_required
+def InfluencerCreateCSV(request):
+    if request.method == 'POST':
+        form = InfluencerCSVForm(request.POST)
+        if form.is_valid():
+            username = request.user
+            # userid = request.user.id
+            fields = form['seperate_fields_with_commas'].value()
+            print('fields', fields)
+            stripped_fields = strip_tags(fields).strip()
+            print('stripped_fields',stripped_fields)
+            field_array = stripped_fields.split(",")
+            field_array = list(map(str.strip, field_array))
+            print('field_array',field_array)
+            data = form['paste_CSV']
+            stripped_data = strip_tags(data).strip()
+            data_array = stripped_data.split(",")
+            print('data_array',data_array)
+            passed = []
+            failed = []
+            test_against = ['influencer_handle','legal_name','email','phone','twitter','youtube','twitch','mixer','shirt','country']
+            for element in field_array:
+                if element in test_against:
+                    passed.append(element)
+                    print(element, "Is a field catagory!!!!!!!!!")
+                else:
+                    print(element, "Is not a field catagory")
+            for element in test_against:
+                if element not in field_array:
+                    failed.append(element)
+                    print(element, "Field is not being populated")
+            print('passed', passed)
+            print('failed', failed)
+            Handle=[]
+            Name=[]
+            Email=[]
+            Twitch=[]
+            Twitter=[]
+            Youtube=[]
+            Mixer=[]
+            Country=[]
+            Shirt=[]
+            Phone=[]
+            pointer = 0
+            for item in data_array:
+                print('passed item', item)
+                catagory = passed[pointer]
+                if catagory == 'influencer_handle':
+                    Handle.append(item)
+                elif catagory == 'legal_name':
+                    Name.append(item)
+                elif catagory == 'email':
+                    Email.append(item)
+                elif catagory == 'phone':
+                    Phone.append(item)
+                elif catagory == 'twitter':
+                    Twitter.append(item)
+                elif catagory == 'youtube':
+                    Youtube.append(item)
+                elif catagory == 'twitch':
+                    Twitch.append(item)
+                elif catagory == 'mixer':
+                    Mixer.append(item)
+                elif catagory == 'shirt':
+                    Shirt.append(item)
+                elif catagory == 'country':
+                    Country.append(item)
+                pointer += 1
+                print('p',pointer)
+                if pointer >= len(passed):
+                    pointer -= len(passed)
+            for item in range(len(Handle)):
+                print('Failed item', item)
+                if 'influencer_handle' in failed:
+                    Handle.append("")
+                if 'legal_name' in failed:
+                    Name.append("")
+                if 'email' in failed:
+                    Email.append("")
+                if 'phone' in failed:
+                    Phone.append("")
+                if 'twitter' in failed:
+                    Twitter.append("")
+                if 'youtube' in failed:
+                    Youtube.append("")
+                if 'twitch' in failed:
+                    Twitch.append("")
+                if 'mixer' in failed:
+                    Mixer.append("")
+                if 'shirt' in failed:
+                    Shirt.append("")
+                if 'country' in failed:
+                    Country.append("")
+            print('Handle',Handle, len(Handle))
+            print('Email',Email, len(Email))
+            for item in range(len(Handle)):
+                print('item no #', item)
+                try:
+                    new_influencer = Influencer(user=username, influencer_handle=Handle[item], legal_name=Name[item], email=Email[item], phone=Phone[item], twitter=Twitter[item], youtube=Youtube[item],twitch=Twitch[item],mixer=Mixer[item],shirt=Shirt[item],country=Country[item])
+                    new_influencer.save()
+                except Exception as inst:
+                    print("Failed to create influencer: ",Handle[item])
+                    print(type(inst))
+                    print(inst.args)
+                    print(inst)
+            return redirect('index')
+    form = InfluencerCSVForm()
+    return render(request, 'mainApp/influencer_csv_form.html', {'form':form})

@@ -44,7 +44,7 @@
             </ul>
             <ul class="navbar-nav ml-auto">
               {% if user.is_authenticated %}
-                <li class="border border-info nav-item mr-3"><a class="nav-link" href="#"> Add Influencer</a></li>
+                <li class="border border-info nav-item mr-3"><a class="nav-link" href="{% url 'influencer-add'%}"> Add Influencer</a></li>
                 <li class="border border-info nav-item mr-3"><a class="nav-link" href="#"> Add Tag</a></li>
                 <li class="border border-info nav-item mr-3"><a class="nav-link" href="#"> Add Event</a></li>
                 <li class="border border-primary nav-item"><a class="nav-link" href="{% url 'logout'%}?next=/"> Logout</a></li>
