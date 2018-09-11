@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{%  block body %}
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-4"></div>
+          <div class="col-4 login-box">
+            <h2 class="login-head">Login</h2>
+            <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success login-button mt-4">Login</button>
+            </form>
+            <br/>
+            <div class="mx-auto">
+              <a class="register-link mb-3" href="{% url 'signup'%}"><button class='btn btn-info'>No account? Register</button></a>
+            </div>
+          </div>
+          <div class="col-4"></div>
+        </div>
+    </div>
+{% endblock %}
