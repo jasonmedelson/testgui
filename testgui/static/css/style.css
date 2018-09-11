@@ -1,0 +1,272 @@
+/* Header */
+.anchor-target{
+  display: block;
+  position: relative;
+  top: -30px;
+  visibility: hidden;
+}
+.navbar-brand{
+  font-family: 'Oswald', sans-serif;
+  font-size: 2em;
+  color:rgba(63, 112, 195, 0.8) !important;
+  margin-left: 20px;
+}
+.collapse.show {
+  text-align: center;
+}
+.collapsing{
+  text-align: center;
+}
+.nav-item{
+  font-size: 1.1em;
+
+}
+div.collapsing ul.navbar-nav li.nav-item{
+  margin-right: 0 !important;
+}
+div.show ul.navbar-nav li.nav-item{
+  margin-right: 0 !important;
+}
+.nav-item:hover{
+  /* font-size: 1.3em;
+  transition: font-size 1s;
+  -webkit-transition: font-size 1s; /* Safari */
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+
+}
+
+/* Home */
+html, body{
+  height: 100%;
+}
+#home{
+  background: rgba(228,228,228,1);
+  height: 100%;
+}
+.edit-button{
+  border: 1px solid black;
+}
+.influencer-table{
+  margin: auto;
+}
+.influencer-table th, td{
+  border-bottom: 1px solid black;
+}
+/* Footer */
+footer {
+  background-color: #222327;
+  padding: 15px 0;
+}
+footer p {
+  margin: 10px 0 0 0;
+  font-family: "Cardo", "Times New Roman", Times, serif;
+  font-size: 16px;
+  font-style: italic;
+  color: #999999;
+}
+.numb{
+  mso-number-format:General;
+}
+.text{
+  mso-number-format:"\@";/*force text*/
+}
+
+/* Login form */
+.login-box{
+  max-width: 430px;
+  margin:auto;
+  margin-top: 50px;
+  background: #fff;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+  padding:0;
+}
+.login-head{
+  background: rgba(73, 47, 188, 0.8);
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  padding-top:10px;
+  color: white;
+
+}
+.register-link{
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+}
+.login-box form p label{
+  color: #555;
+  display: inline-block;
+  margin-left: 10%;
+  font-size: 16px;
+}
+.login-box form p input{
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 14px;
+  outline: none;
+  display: block;
+  color: #777;
+  padding-left: 10px;
+  margin:auto;
+  width: 80%;
+  height: 35px;
+  border: 1px solid #c7d0d2;
+  border-radius: 2px;
+  box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
+}
+.login-button{
+  margin:auto;
+  width:60%;
+  display: block;
+  font-size: 18px;
+}
+/*panel body*/
+.panel-body{
+  background: #fff;
+  padding:0;
+  border-radius: 20px;
+  max-width: 430px;
+}
+.list-panel-body{
+  background: #fff;
+  padding:0;
+  border-radius: 20px;
+  max-width: 680px;
+  min-width: 310px
+}
+.panel-head{
+  background: rgba(73, 47, 188, 0.8);
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  padding-top:10px;
+  color: white;
+  border-radius: 20px 20px 0 0;
+}
+.form-label{
+  color: #555;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+}
+.form-label label{
+  margin:auto;
+}
+.tag-field{
+  margin:auto;
+}
+.tag-field input{
+  width: 100%;
+}
+.submit-form{
+  margin:auto;
+  width:60%;
+  display: block;
+  font-size: 18px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.influencer-csv-panel{
+  background: #fff;
+  padding:0;
+  border-radius: 20px;
+  max-width: 710px;
+  min-width: 450px;
+  height: 480px;
+}
+.influencer-form-panel{
+  background: #fff;
+  padding:0;
+  border-radius: 20px;
+  max-width: 940px;
+  min-width: 450px;
+}
+.influencer-form-label{
+  color: #555;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.influencer-form-label label{
+  padding-left: 15px;
+  padding-top: 15px;
+  padding-bottom: 5px;
+  height: 35px;
+}
+
+.form-label-container{
+  height: 45px;
+}
+textarea{
+  width:100%;
+  height:180px;
+}
+ul li label input{
+  width:auto !important;
+}
+div.tag-field ul{
+  padding-left: 20px;
+}
+#search-events, #search-tags{
+  margin-bottom: 10px;
+}
+
+/* Helper Panel */
+.helper-panel{
+  height:100%;
+  background: #fff;
+  border-radius: 20px;
+  width:240px;
+  height: 480px;
+}
+.helper-panel .panel-head{
+  background: rgb(23, 162, 184);
+
+}
+.helper-list{
+  list-style: none;
+}
+.helper-list li{
+  margin:auto;
+}
+.helper-list li button{
+  width:70%;
+  margin:auto;
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+@media only screen and (max-width: 767px) {
+  .helper-panel{
+    height:100%;
+    background: #fff;
+    border-radius: 20px;
+    width:100%;
+    padding:0px;
+    min-width: 450px;
+  }
+}
+/* List Checkbox */
+ul#id_list_influencers li{
+  display: inline-block;
+  width: 49%;
+}
+@media only screen and (max-width: 1050px) {
+  ul#id_list_influencers li{
+    display: inline-block;
+    width: 80%;
+  }
+  ul#id_list_influencers{
+    padding-left: 20%;
+  }
+}
