@@ -36,7 +36,7 @@ class InfluencerCreateForm(forms.ModelForm):
 
 class InfluencerCSVForm(forms.Form):
     seperate_fields_with_commas = forms.CharField(max_length=200)
-    paste_CSV = forms.CharField(widget=forms.Textarea)
+    insert_comma_seperated_values= forms.CharField(widget=forms.Textarea)
 
 class TagFormCSV(forms.Form):
     seperate_tags_with_commas = forms.CharField(widget=forms.Textarea)

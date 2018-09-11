@@ -279,3 +279,168 @@ def InfluencerCreateCSV(request):
             return redirect('index')
     form = InfluencerCSVForm()
     return render(request, 'mainApp/influencer_csv_form.html', {'form':form})
+
+# Create Tag Instance
+class TagCreate(CreateView):
+    model = Tags
+    fields = [
+    'tag_name'
+    ]
+    success_url = reverse_lazy('index')
+    def form_valid(self, form):
+        tagForm = form.save(commit=False)
+        tagForm.tag_name = tagForm.tag_name.upper()
+        check = tagForm.tag_name
+        obj, created = Tags.objects.get_or_create(tag_name = check, tag_user = self.request.user)
+        if not created:
+            print(obj.get_absolute_url())
+            return redirect(obj.get_absolute_url())
+        else:
+            return redirect('index')
+
+#Update Tag Instance
+@login_required
+def TagUpdate(request, pk):
+    tag = get_object_or_404(Tags, tag_user=request.user, id=pk)
+    exists = False
+    if request.POST:
+        form = TagForm(request.POST, instance=tag)
+        test = form['tag_name'].value()
+        try:
+            check = Tags.objects.get(tag_user=request.user, tag_name=test)
+            exists = test
+        except:
+            pass
+        if not exists:
+            if form.is_valid():
+                form.save()
+                return redirect('index')
+    test = tag.tag_name
+    form = TagForm(instance=tag)
+    print(form)
+    context = { 'form':form,
+                'id':pk,
+                'test':test,
+                'exists':exists}
+    return render(request,'mainApp/tags_update.html',context)
+
+#Delete Tag Instance
+class TagDelete(DeleteView):
+    template_name = 'delete.html'
+    model = Tags
+    success_url = reverse_lazy('index')
+
+#Create multiple Tags
+@login_required
+def TagCreateCSV(request):
+    form = TagFormCSV()
+    if request.method == 'POST':
+        form = TagFormCSV(request.POST)
+        if form.is_valid():
+            data = form['seperate_tags_with_commas']
+            stripped_data = strip_tags(data).strip()
+            tag_array = stripped_data.split(",")
+            created_tags = []
+            for tag in tag_array:
+                tag = tag.strip()
+                tag = tag.upper()
+                if tag == '':
+                    continue
+                query = Tags.objects.filter(tag_name=tag )
+                query = query.filter(tag_user=request.user)
+                exists = len(query)
+                if not exists:
+                    new_tag = Tags.objects.create(tag_name = tag, tag_user = request.user)
+                    new_tag.save
+                    created_tags.append(tag)
+            return render(
+                            request,
+                            'mainApp/tag_csv_form.html',
+                            {
+                                'form':form,
+                                'created':created_tags
+                            }
+                        )
+    return render(request, 'mainApp/tag_csv_form.html', {'form':form})
+
+#Create Event Instance
+class EventCreate(CreateView):
+    model = Events
+    fields = [
+    'event_name'
+    ]
+    success_url = reverse_lazy('index')
+    def form_valid(self, form):
+        eventForm = form.save(commit=False)
+        check = eventForm.event_name.upper()
+        obj, created = Events.objects.get_or_create(event_name = check, event_user = self.request.user)
+        if not created:
+            print(obj.get_absolute_url())
+            return redirect(obj.get_absolute_url())
+        else:
+            return redirect('index')
+
+#Update Event Instance
+@login_required
+def EventUpdate(request, pk):
+    event = get_object_or_404(Events, event_user=request.user, id=pk)
+    exists = False
+    if request.POST:
+        form = EventForm(request.POST, instance=event)
+        test = form['event_name'].value()
+        try:
+            check = Events.objects.get(event_user=request.user, event_name=test)
+            exists = test
+        except:
+            pass
+        if not exists:
+            if form.is_valid():
+                form.save()
+                return redirect('index')
+    test = event.event_name
+    form = EventForm(instance=event)
+    print(form)
+    context = { 'form':form,
+                'id':pk,
+                'test':test,
+                'exists':exists}
+    return render(request,'mainApp/events_update.html',context)
+
+#Delete Event Instance
+class EventDelete(DeleteView):
+    template_name = 'delete.html'
+    model = Events
+    success_url = reverse_lazy('index')
+
+#Create multiple Event Instances
+@login_required
+def EventCreateCSV(request):
+    form = EventFormCSV()
+    if request.method == 'POST':
+        form = EventFormCSV(request.POST)
+        if form.is_valid():
+            data = form['seperate_events_with_commas']
+            stripped_data = strip_tags(data).strip()
+            event_array = stripped_data.split(",")
+            created_events = []
+            for event in event_array:
+                event = event.strip()
+                event = event.upper()
+                if event == '':
+                    continue
+                query = Events.objects.filter(event_name=event )
+                query = query.filter(event_user=request.user)
+                exists = len(query)
+                if not exists:
+                    new_event = Events.objects.create(event_name = event, event_user = request.user)
+                    new_event.save
+                    created_events.append(event)
+            return render(
+                            request,
+                            'mainApp/event_csv_form.html',
+                            {
+                                'form':form,
+                                'created':created_events
+                            }
+                        )
+    return render(request, 'mainApp/event_csv_form.html', {'form':form})
