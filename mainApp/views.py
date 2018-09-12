@@ -444,3 +444,103 @@ def EventCreateCSV(request):
                             }
                         )
     return render(request, 'mainApp/event_csv_form.html', {'form':form})
+
+#displays all instances of lists
+@login_required
+def lists(request):
+    username = None
+    if request.user.is_authenticated:
+        username = request.user
+        userid = request.user.id
+        all_lists = List.objects.filter(list_user = userid)
+    Name = []
+    influencers = []
+    Links = []
+    try:
+        for number in range(len(all_lists)):
+            Name.append(all_lists[number].list_name)
+            i_name = []
+            i_link = []
+            list_influencer = all_lists[number].list_influencers.all()
+            for item in list_influencer:
+                i_name.append(item.influencer_handle)
+                i_link.append(item.get_absolute_url)
+            i_data = zip(
+                i_name,
+                i_link
+            )
+            # hold = hold[:-2]
+            influencers.append(i_data)
+            Links.append(all_lists[number])
+    except:
+        Name.append('Error')
+        influencers.append('Error')
+        Links.append('Error')
+    zipped = zip(
+        Name,
+        influencers,
+        Links,
+        )
+
+    return render(request,'mainApp/list-home.html',context={'info':zipped})
+
+# Creates List instance containing Influencers
+@login_required
+def ListCreate(request):
+    if request.method == 'POST':
+        form = ListCreateForm(request.user, request.POST)
+        if form.is_valid():
+            people = form.save(commit=False)
+            name = people.list_name
+            check = List.objects.filter(list_user = request.user, list_name = name)
+            if not len(check):
+                people.list_user = request.user
+                people.save()
+                form.save_m2m()
+                return redirect('lists-home')
+            else:
+                context = {
+                    'exists':name,
+                    'form': form,
+                }
+                return render(request, 'mainApp/list_form.html', context)
+
+    else:
+        form = ListCreateForm(request.user)
+    return render(request, 'mainApp/list_form.html', {'form': form})
+
+#Update List Instance
+@login_required
+def ListUpdate(request, pk):
+    list = get_object_or_404(List, list_user=request.user, list_id=pk)
+    original = list.list_name
+    update = True
+    exists = False
+    if request.POST:
+        form = ListCreateForm(request.user,request.POST, instance=list)
+        test = form['list_name'].value()
+        if not original == test:
+            try:
+                check = List.objects.get(list_user=request.user, list_name=test)
+                exists = test
+            except:
+                pass
+        if not exists:
+            if form.is_valid():
+                form.save()
+                return redirect('lists-home')
+    test = list.list_name
+    form = ListCreateForm(request.user, instance=list)
+    print(form)
+    context = { 'form':form,
+                'id':pk,
+                'test':test,
+                'exists':exists,
+                'update':update}
+    return render(request,'mainApp/list_form.html',context)
+
+#Delete List Instance
+class ListDelete(DeleteView):
+    template_name = 'delete.html'
+    model = List
+    success_url = reverse_lazy('lists-home')

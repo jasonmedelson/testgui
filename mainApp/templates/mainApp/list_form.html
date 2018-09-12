@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col"></div>
+          <div class="list-panel-body col-6  mt-4">
+              <h2 class="panel-head ">
+                {% if update %}
+                  Update List
+                {% else %}
+                  Create New List
+                {% endif %}
+              </h2>
+              {% if exists %}
+                <h5 class="text-center text-danger">{{exists}} is already a List</h5>
+              {% endif %}
+              {% if update %}
+                <div class='form-group row my-4'>
+                  <label class="form-label ml-2 col-3 text-center">Original</label>
+                  <div class="tag-field col mr-4"><input type="text" placeholder='{{test}}' readonly /></div>
+                </div>
+              {% endif %}
+              <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {% for field in form %}
+                      <div class="form-group row my-4">
+                          <div class="col-12">
+                              <span class="text-danger small">{{ field.errors }}</span>
+                          </div>
+                          <label class="form-label ml-2 col-3 text-center">{{ field.label_tag|title }}</label>
+                          <div class="tag-field col mr-4">{{ field }}</div>
+                      </div>
+
+                  {% endfor %}
+                  <div class="form-group">
+                      <div class="">
+                        {% if update %}
+                          <button type="submit" class="btn btn-success submit-form">Update List</button>
+                          <a href="{% url 'list-delete' pk=id %}" class="btn btn-outline-danger submit-form mt-2">Delete This List</a>
+                        {% else %}
+                          <button type="submit" class="btn btn-success submit-form">Submit</button>
+                        {% endif %}
+                      </div>
+                  </div>
+              </form>
+          </div>
+          <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}

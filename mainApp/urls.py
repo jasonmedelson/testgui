@@ -16,5 +16,9 @@ urlpatterns = [
     path('event/add/csv', views.EventCreateCSV, name='event-add-csv'),
     path('event/<int:pk>/', views.EventUpdate, name='event-update'),
     path('event/<int:pk>/delete/', views.EventDelete.as_view(), name='event-delete'),
+    path('list/', views.lists, name='lists-home'),
+    path('list/add', views.ListCreate, name='lists-add'),
+    path('list/<uuid:pk>/', views.ListUpdate, name='list-update'),
+    path('list/<uuid:pk>/delete/', views.ListDelete.as_view(), name='list-delete'),
 
 ]

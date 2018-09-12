@@ -5,6 +5,7 @@
     <div id="home">
         <div class="container-fluid">
             <div>
+              {% debug %}
               <a href="{% url 'index' %}">Go Back To Home</a>
               <form method="post">
                 {% csrf_token %}
