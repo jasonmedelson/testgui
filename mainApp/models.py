@@ -92,7 +92,7 @@ class Influencer(models.Model):
     notes = models.TextField(blank = True,)
     tags = models.ManyToManyField(Tags,blank=True)
     events = models.ManyToManyField(Events,blank=True)
-
+    
     def __str__(self):
         return self.influencer_handle
 

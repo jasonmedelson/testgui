@@ -1,17 +1,24 @@
 {% extends 'base.html' %}
-
-{%  block body %}
-    <div id="homenav" class="anchor-target"></div>
-    <div id="home">
-        <div class="container-fluid">
-            <div>
-              {% debug %}
-              <a href="{% url 'index' %}">Go Back To Home</a>
-              <form method="post">
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-4"></div>
+          <div class="panel-body col-4  mt-4">
+              <div class="panel-head bg-white text-dark mb-0 border-bottom">
+                  <h2>You are about to delete</h2>
+                  <h2>{{type}}: {{object}}</h2>
+                  <div style="display:none">
+                  </div>
+              </div>
+              <form class="form-horizontal my-3" action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <button class="btn btn-danger">Are you sure you want to delete ?</button>
+                <div class="row justify-content-center">
+                  <a class="col-4 mx-auto my-2 d-inline-block btn btn-success text-white pr-2" href="{% url 'index'%}">Take me back</a>
+                  <button class="col-4 btn btn-danger my-2 mx-auto d-inline-block">Delete {{type}}</button>
+                </div>
               </form>
-            </div>
+          </div>
+          <div class="col-4"></div>
         </div>
     </div>
 {% endblock %}

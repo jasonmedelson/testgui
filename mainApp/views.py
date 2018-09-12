@@ -169,6 +169,10 @@ class InfluencerDelete(DeleteView):
     template_name = 'delete.html'
     model = Influencer
     success_url = reverse_lazy('index')
+    def get_context_data(self, *args,**kwargs):
+        context = super(InfluencerDelete, self).get_context_data(*args, **kwargs)
+        context['type'] = 'Influencer'
+        return context
 
 #Create multiple influencer instances from csv data
 @login_required
@@ -280,6 +284,18 @@ def InfluencerCreateCSV(request):
     form = InfluencerCSVForm()
     return render(request, 'mainApp/influencer_csv_form.html', {'form':form})
 
+@login_required
+def ViewTags(request):
+    userid = request.user.id
+    query = Tags.objects.filter(tag_user = userid)
+    hold = []
+    for item in query:
+        hold.append(item)
+    context = {
+        'hold':hold,
+    }
+    return render(request, 'mainApp/all-tags.html',context)
+
 # Create Tag Instance
 class TagCreate(CreateView):
     model = Tags
@@ -329,6 +345,10 @@ class TagDelete(DeleteView):
     template_name = 'delete.html'
     model = Tags
     success_url = reverse_lazy('index')
+    def get_context_data(self, *args,**kwargs):
+        context = super(TagDelete, self).get_context_data(*args, **kwargs)
+        context['type'] = 'Tag'
+        return context
 
 #Create multiple Tags
 @login_required
@@ -411,6 +431,10 @@ class EventDelete(DeleteView):
     template_name = 'delete.html'
     model = Events
     success_url = reverse_lazy('index')
+    def get_context_data(self, *args,**kwargs):
+        context = super(EventDelete, self).get_context_data(*args, **kwargs)
+        context['type'] = 'Event'
+        return context
 
 #Create multiple Event Instances
 @login_required
@@ -544,3 +568,7 @@ class ListDelete(DeleteView):
     template_name = 'delete.html'
     model = List
     success_url = reverse_lazy('lists-home')
+    def get_context_data(self, *args,**kwargs):
+        context = super(ListDelete, self).get_context_data(*args, **kwargs)
+        context['type'] = 'List'
+        return context
