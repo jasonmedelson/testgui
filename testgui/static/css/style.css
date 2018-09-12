@@ -1,3 +1,12 @@
+/* item list style */
+.item-list{
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+.item-list li{
+  display:inline;
+}
 /* Header */
 .anchor-target{
   display: block;

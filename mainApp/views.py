@@ -24,6 +24,7 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+
 def index(request):
     username = None
     if request.user.is_authenticated:
@@ -131,6 +132,7 @@ def index(request):
     )
 
 # create a new Influencer instance
+
 @login_required
 def InfluencerCreate(request):
     if request.method == 'POST':
@@ -295,6 +297,20 @@ def ViewTags(request):
         'hold':hold,
     }
     return render(request, 'mainApp/all-tags.html',context)
+
+def DisplayTag(request, pk):
+    tag = get_object_or_404(Tags, tag_user=request.user, id=pk)
+    influencers = Influencer.objects.filter(tags = tag)
+    data = []
+    for item in influencers:
+        data.append(item)
+    count = len(data)
+    context = {
+        'data':data,
+        'count':count,
+        'tag':tag,
+    }
+    return render(request, 'mainApp/display-tag.html',context)
 
 # Create Tag Instance
 class TagCreate(CreateView):

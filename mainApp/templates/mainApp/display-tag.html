@@ -4,12 +4,15 @@
         <div class="row">
           <div class="col-4"></div>
           <div class="panel-body col-4  mt-4">
-              <h2 class="panel-head ">Tags</h2>
+            <div class="panel-head">
+              <h2 >Tag: {{tag}}</h2>
+              <h6>Count: {{count}}</h6>
+            </div>
               <div class="panel-list">
                 <ul class="item-list">
-                  {% for item in hold %}
+                  {% for item in data %}
                   <li>
-                    <a class="btn btn-info my-1 mx-1" href="{{item.get_absolute_url}}">{{item.tag_name}}</a>
+                    <a class="btn btn-info my-1 mx-1" href="{{item.get_absolute_url}}">{{item}}</a>
                   </li>
                   {% endfor %}
                 </ul>

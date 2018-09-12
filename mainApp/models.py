@@ -11,7 +11,7 @@ class Tags(models.Model):
     def __str__(self):
         return self.tag_name
     def get_absolute_url(self):
-        return reverse('tag-update', kwargs={'pk': self.id})
+        return reverse('tag-display', kwargs={'pk': self.id})
     class Meta:
         ordering = ('tag_name',)
 
@@ -92,7 +92,7 @@ class Influencer(models.Model):
     notes = models.TextField(blank = True,)
     tags = models.ManyToManyField(Tags,blank=True)
     events = models.ManyToManyField(Events,blank=True)
-    
+
     def __str__(self):
         return self.influencer_handle
 
