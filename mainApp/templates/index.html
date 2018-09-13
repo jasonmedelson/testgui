@@ -10,6 +10,9 @@
             <div class="col-5 ">
               <div class="input-group">
                 <div class="input-group-prepend">
+                  <button type="button" class="btn btn-primary" onclick="toggle_fields()">Toggle Fields</button>
+                </div>
+                <div class="input-group-prepend">
                   <select class="custom-select" id="inputGroupSelect01">
                     <option selected value="0">All Fields</option>
                     <option value="1">Handle</option>
@@ -40,24 +43,22 @@
 
           <thead class="thead-dark">
               <tr>
-                  <th scope="col">Handle</th>  <!-- a -->
-                  <th scope="col">Name</th> <!-- b -->
-                  <th scope="col">Email</th>  <!-- c -->
-                  <th scope="col">Twitch</th>  <!-- d -->
-                  <th scope="col">Twitter</th>  <!-- e -->
-                  <th scope="col">Country</th> <!-- f -->
-                  <th scope="col">Shirt</th> <!-- g -->
+                  <th scope="col" class="">Handle</th>  <!-- a -->
+                  <th scope="col" class="index-shown">Name</th> <!-- b -->
+                  <th scope="col" class="index-shown">Email</th>  <!-- c -->
+                  <th scope="col" class="index-shown">Twitch</th>  <!-- d -->
+                  <th scope="col" class="index-shown">Twitter</th>  <!-- e -->
+                  <th scope="col" class="index-shown">Country</th> <!-- f -->
+                  <th scope="col" class="index-shown">Shirt</th> <!-- g -->
+                  <th scope="col" class="index-hidden" style="display:none">Last Updated</th>
+                  <th scope="col" class="index-hidden" style="display:none">Mailing Address</th>
+                  <th scope="col" class="index-hidden" style="display:none">Phone</th>
+                  <th scope="col" class="index-hidden" style="display:none">Youtube</th>
+                  <th scope="col" class="index-hidden" style="display:none">Mixer</th>
+                  <th scope="col" class="index-hidden" style="display:none">Tags</th>
+                  <th scope="col" class="index-hidden" style="display:none">Events</th>
+                  <th scope="col" class="index-hidden" style="display:none">Lists</th>
                   <th scope="col">Edit</th> <!--h -->
-
-                  <th scope="col" style="display:none">Last Updated</th>
-                  <th scope="col" style="display:none">Mailing Address</th>
-                  <th scope="col" style="display:none">Phone</th>
-                  <th scope="col" style="display:none">Youtube</th>
-                  <th scope="col" style="display:none">Mixer</th>
-                  <th scope="col" style="display:none">Tags</th>
-                  <th scope="col" style="display:none">Events</th>
-                  <th scope="col" style="display:none">Lists</th>
-
 
               </tr>
           </thead>
@@ -65,21 +66,21 @@
           {% for  Handle,Name,Email,Twitch,Twitter,Country,Shirt,influencer,Last_Updated,Mailing_Address,Phone,Youtube,Mixer,tags,events,lists in info %}
               <tr>
                   <td class="text" scope="row">{{ Handle }}</td>
-                  <td class="text">{{ Name }}</td>
-                  <td class="text">{{ Email }}</td>
-                  <td class="numb">{{ Twitch }}</td>
-                  <td class="numb">{{ Twitter }}</td>
-                  <td class="text">{{ Country }}</td>
-                  <td class="text">{{ Shirt }}</td>
+                  <td class="text index-shown">{{ Name }}</td>
+                  <td class="text index-shown"><a href="mailto:{{ Email }}">{{Email}}</a></td>
+                  <td class="numb index-shown"><a href="https://{{Twitch}}">{{ Twitch }}</a></td>
+                  <td class="numb index-shown"><a href="https://{{Twitter}}">{{ Twitter }}</a></td>
+                  <td class="text index-shown">{{ Country }}</td>
+                  <td class="text index-shown">{{ Shirt }}</td>
+                  <td class="text index-hidden" style="display:none">{{ Last_Updated }}</td>
+                  <td class="text index-hidden" style="display:none">{{ Mailing_Address }}</td>
+                  <td class="text index-hidden" style="display:none">{{ Phone }}</td>
+                  <td class="text index-hidden" style="display:none"><a href="https://{{Youtube}}">{{ Youtube }}</td>
+                  <td class="text index-hidden" style="display:none"><a href="https://{{Mixer}}">{{ Mixer }}</td>
+                  <td class="text index-hidden" style="display:none">{{ tags }}</td>
+                  <td class="text index-hidden" style="display:none">{{ events }}</td>
+                  <td class="text index-hidden" style="display:none">{{ lists }}</td>
                   <td><a href="{{influencer.get_absolute_url}}" class="btn btn-primary active" role="button" aria-pressed="true">Edit Influencer</a></td>
-                  <td class="text" style="display:none">{{ Last_Updated }}</td>
-                  <td class="text" style="display:none">{{ Mailing_Address }}</td>
-                  <td class="text" style="display:none">{{ Phone }}</td>
-                  <td class="text" style="display:none">{{ Youtube }}</td>
-                  <td class="text" style="display:none">{{ Mixer }}</td>
-                  <td class="text" style="display:none">{{ tags }}</td>
-                  <td class="text" style="display:none">{{ events }}</td>
-                  <td class="text" style="display:none">{{ lists }}</td>
 
               </tr>
           {% endfor %}

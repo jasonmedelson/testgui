@@ -161,6 +161,9 @@ footer p {
   color: white;
   border-radius: 20px 20px 0 0;
 }
+.panel-footer{
+  border-radius: 0px 0px 20px 20px;
+}
 .form-label{
   color: #555;
   display: inline-block;

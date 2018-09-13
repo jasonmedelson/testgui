@@ -180,3 +180,7 @@ if ( $( "#id_events" ).length ) {
 if ( $( "#id_list_influencers" ).length ) {
     $( "#id_list_influencers" ).before("<input type='text' class='mb-1' id='search-lists' onkeyup='lists_filter()' placeholder='Search for Lists'></input>");
 }
+function toggle_fields(){
+  $( ".index-hidden" ).toggle();
+  $( ".index-shown" ).toggle();
+}

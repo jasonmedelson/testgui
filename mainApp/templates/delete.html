@@ -13,7 +13,8 @@
               <form class="form-horizontal my-3" action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row justify-content-center">
-                  <a class="col-4 mx-auto my-2 d-inline-block btn btn-success text-white pr-2" href="{% url 'index'%}">Take me back</a>
+                  <!-- <a class="col-4 mx-auto my-2 d-inline-block btn btn-success text-white pr-2" href="{% url 'index'%}">Take me back</a> -->
+                  <a class="col-4 mx-auto my-2 d-inline-block btn btn-success text-white pr-2" href="{{object.get_display_url}}">Take me back</a>
                   <button class="col-4 btn btn-danger my-2 mx-auto d-inline-block">Delete {{type}}</button>
                 </div>
               </form>

@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required #login_required view decorator
 from django.views.generic.edit import CreateView, DeleteView, UpdateView #Django Class based generic views
 from django.utils.html import strip_tags #strip html from user input
+import csv
 
 
 def signup(request):
@@ -83,6 +84,7 @@ def index(request):
                 events.append(hold)
                 query = List.objects.filter(list_influencers__influencer_handle = all_influencers[number].influencer_handle)
                 print('q',query)
+                hold = ""
                 for item in query:
                     hold += item.list_name + ', '
                 print('h',hold)
@@ -298,6 +300,7 @@ def ViewTags(request):
     }
     return render(request, 'mainApp/all-tags.html',context)
 
+@login_required
 def DisplayTag(request, pk):
     tag = get_object_or_404(Tags, tag_user=request.user, id=pk)
     influencers = Influencer.objects.filter(tags = tag)
@@ -398,6 +401,34 @@ def TagCreateCSV(request):
                             }
                         )
     return render(request, 'mainApp/tag_csv_form.html', {'form':form})
+
+
+@login_required
+def ViewEvents(request):
+    userid = request.user.id
+    query = Events.objects.filter(event_user = userid)
+    hold = []
+    for item in query:
+        hold.append(item)
+    context = {
+        'hold':hold,
+    }
+    return render(request, 'mainApp/all-events.html',context)
+
+@login_required
+def DisplayEvent(request, pk):
+    event = get_object_or_404(Events, event_user=request.user, id=pk)
+    influencers = Influencer.objects.filter(events = event)
+    data = []
+    for item in influencers:
+        data.append(item)
+    count = len(data)
+    context = {
+        'data':data,
+        'count':count,
+        'event':event,
+    }
+    return render(request, 'mainApp/display-event.html',context)
 
 #Create Event Instance
 class EventCreate(CreateView):
@@ -588,3 +619,31 @@ class ListDelete(DeleteView):
         context = super(ListDelete, self).get_context_data(*args, **kwargs)
         context['type'] = 'List'
         return context
+
+@login_required
+def TagToCSV(request, pk):
+    tag = get_object_or_404(Tags, tag_user=request.user, id=pk)
+    influencers = Influencer.objects.filter(tags = tag)
+    file = tag.tag_name.replace(" ", "_")
+    file = file + ".csv"
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="CSV_{}"'.format(file)
+    writer = csv.writer(response)
+    writer.writerow(['Handle','Legal Name','Email','Mailing Address','Phone','Shirt Size','Country','Twitter','Youtube','Twitch','Mixer','Notes'])
+    for item in influencers:
+        writer.writerow([item.influencer_handle, item.legal_name, item.email, item.mailing_address, item.phone, item.shirt, item.country, item.twitter, item.youtube,item.twitch,item.mixer,item.notes])
+    return response
+
+@login_required
+def EventToCSV(request, pk):
+    event = get_object_or_404(Events, event_user=request.user, id=pk)
+    influencers = Influencer.objects.filter(events = event)
+    file = event.event_name.replace(" ", "_")
+    file = file + ".csv"
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="CSV_{}"'.format(file)
+    writer = csv.writer(response)
+    writer.writerow(['Handle','Legal Name','Email','Mailing Address','Phone','Shirt Size','Country','Twitter','Youtube','Twitch','Mixer','Notes'])
+    for item in influencers:
+        writer.writerow([item.influencer_handle, item.legal_name, item.email, item.mailing_address, item.phone, item.shirt, item.country, item.twitter, item.youtube,item.twitch,item.mixer,item.notes])
+    return response

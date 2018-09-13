@@ -5,7 +5,7 @@
           <div class="col-4"></div>
           <div class="panel-body col-4  mt-4">
             <div class="panel-head">
-              <h2 >Tag: {{tag}}</h2>
+              <h2 >Event: {{event}}</h2>
               <h6>Count: {{count}}</h6>
             </div>
               <div class="panel-list">
@@ -18,8 +18,8 @@
                 </ul>
               </div>
               <div class="panel-footer bg-secondary row justify-content-center mx-0 py-2">
-                <a class="col-4 mx-auto my-2 d-inline-block btn btn-info text-white pr-2" href="{{tag.get_update_url}}">Edit Name</a>
-                <a class="col-4 mx-auto my-2 d-inline-block btn btn-danger text-white pr-2" href="{% url 'tag-delete' pk=tag.id%}">Delete Tag</a>
+                <a class="col-4 mx-auto my-2 d-inline-block btn btn-info text-white pr-2" href="{{event.get_update_url}}">Edit Name</a>
+                <a class="col-4 mx-auto my-2 d-inline-block btn btn-danger text-white pr-2" href="{% url 'event-delete' pk=event.id%}">Delete Event</a>
                 <button class="col-10 mx-auto my-2 d-inline-block btn btn-primary text-white pr-2" data-toggle="modal" data-target="#csvModal">Export to CSV</button>
               </div>
           </div>
@@ -37,10 +37,10 @@
             </button>
           </div>
           <div class="modal-body">
-            Export Tag: {{tag}} to CSV File
+            Export Event: {{event}} to CSV File
           </div>
           <div class="modal-footer">
-            <a href="{% url 'tag-csv' pk=tag.id%}" type="button" class="btn btn-primary">Confirm Export</a>
+            <a href="{% url 'event-csv' pk=event.id%}" type="button" class="btn btn-primary">Confirm Export</a>
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
           </div>
         </div>

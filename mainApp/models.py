@@ -12,6 +12,8 @@ class Tags(models.Model):
         return self.tag_name
     def get_absolute_url(self):
         return reverse('tag-display', kwargs={'pk': self.id})
+    def get_update_url(self):
+        return reverse('tag-update', kwargs={'pk': self.id})
     class Meta:
         ordering = ('tag_name',)
 
@@ -21,6 +23,8 @@ class Events(models.Model):
     def __str__(self):
         return self.event_name
     def get_absolute_url(self):
+        return reverse('event-display', kwargs={'pk': self.id})
+    def get_update_url(self):
         return reverse('event-update', kwargs={'pk': self.id})
     class Meta:
         ordering = ('event_name',)
@@ -98,6 +102,8 @@ class Influencer(models.Model):
 
     def get_absolute_url(self):
         return reverse('influencer-update', kwargs={'pk': self.id})
+    def get_display_url(self):
+        return reverse('influencer-add-csv')
     class Meta:
         ordering = ('influencer_handle',)
 
