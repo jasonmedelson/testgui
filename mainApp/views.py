@@ -647,3 +647,16 @@ def EventToCSV(request, pk):
     for item in influencers:
         writer.writerow([item.influencer_handle, item.legal_name, item.email, item.mailing_address, item.phone, item.shirt, item.country, item.twitter, item.youtube,item.twitch,item.mixer,item.notes])
     return response
+
+def ListToCSV(request, pk):
+    list = get_object_or_404(List, list_user=request.user, list_id=pk)
+    influencers = list.list_influencers.all() 
+    file = list.list_name.replace(" ", "_")
+    file = file + ".csv"
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="CSV_{}"'.format(file)
+    writer = csv.writer(response)
+    writer.writerow(['Handle','Legal Name','Email','Mailing Address','Phone','Shirt Size','Country','Twitter','Youtube','Twitch','Mixer','Notes'])
+    for item in influencers:
+        writer.writerow([item.influencer_handle, item.legal_name, item.email, item.mailing_address, item.phone, item.shirt, item.country, item.twitter, item.youtube,item.twitch,item.mixer,item.notes])
+    return response

@@ -18,7 +18,7 @@
                 </ul>
               </div>
               <div class="panel-footer bg-secondary row justify-content-center mx-0 py-2">
-                <a class="col-4 mx-auto my-2 d-inline-block btn btn-info text-white pr-2" href="{{tag.get_update_url}}">Edit Name</a>
+                <a class="col-4 mx-auto my-2 d-inline-block btn btn-success text-white pr-2" href="{{tag.get_update_url}}">Edit Name</a>
                 <a class="col-4 mx-auto my-2 d-inline-block btn btn-danger text-white pr-2" href="{% url 'tag-delete' pk=tag.id%}">Delete Tag</a>
                 <button class="col-10 mx-auto my-2 d-inline-block btn btn-primary text-white pr-2" data-toggle="modal" data-target="#csvModal">Export to CSV</button>
               </div>

@@ -41,7 +41,16 @@
                     <a href="{{link}}">{{item}},</a>
                   {% endfor %}
                   </td>
-                  <td><a href="{{c.get_absolute_url}}" class="btn btn-primary active" role="button" aria-pressed="true">Edit List</a></td>
+                  <td>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      <button class="btn btn-secondary">
+                        <a href="{{c.get_absolute_url}}" class="text-white" role="button" aria-pressed="true">Edit List</a>
+                      </button>
+                      <button class="btn btn-info">
+                        <a href="{% url 'list-csv' pk=c.list_id%}" class="text-white" role="button" aria-pressed="true">Export to CSV</a>
+                      </button>
+                    </div>
+                  </td>
               </tr>
           {% endfor %}
           </tbody>

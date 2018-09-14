@@ -25,6 +25,7 @@ urlpatterns = [
     path('list/', views.lists, name='lists-home'),
     path('list/add', views.ListCreate, name='lists-add'),
     path('list/<uuid:pk>/', views.ListUpdate, name='list-update'),
+    path('list/<uuid:pk>/csv', views.ListToCSV, name='list-csv'),
     path('list/<uuid:pk>/delete/', views.ListDelete.as_view(), name='list-delete'),
 
 ]
