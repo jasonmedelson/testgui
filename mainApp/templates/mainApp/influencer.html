@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-2"></div>
+          <div class="i-display-content col-7  mt-4">
+            <div class="row">
+              <div class="i-left-content border-right col-5">
+                <div class="l-influencer-header mb-0">
+                    <h2>Influencers</h2>
+                </div>
+                <div class="list-group list-group-flush">
+                    {% for item in influencers %}
+                      <button type="button" class="list-group-item list-group-item-action">
+                          <h5><span class="oi oi-person mr-4"></span> {{item.influencer_handle}}</h5>
+                      </button>
+                    {% endfor %}
+                </div>
+              </div>
+              <div class="col no-gutters">
+                <div class="panel-head mt-4">
+                    <h2>Update Tag #{{id}}</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1"></div>
+        </div>
+    </div>
+{% endblock %}

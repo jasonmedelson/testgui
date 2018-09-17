@@ -133,8 +133,25 @@ def index(request):
         context={'info':zipped}
     )
 
-# create a new Influencer instance
+@login_required
+def InfluencerView(request):
+    username = None
+    if request.user.is_authenticated:
+        username = request.user
+        userid = request.user.id
+        all_influencers = Influencer.objects.filter(user = userid)
+    else:
+        all_influencers= []
+    context = {
+        'influencers':all_influencers,
+    }
+    return render(
+        request,
+        'mainApp/influencer.html',
+        context,
+    )
 
+# create a new Influencer instance
 @login_required
 def InfluencerCreate(request):
     if request.method == 'POST':
@@ -650,7 +667,7 @@ def EventToCSV(request, pk):
 
 def ListToCSV(request, pk):
     list = get_object_or_404(List, list_user=request.user, list_id=pk)
-    influencers = list.list_influencers.all() 
+    influencers = list.list_influencers.all()
     file = list.list_name.replace(" ", "_")
     file = file + ".csv"
     response = HttpResponse(content_type='text/csv')

@@ -283,3 +283,17 @@ ul#id_list_influencers li{
     padding-left: 20%;
   }
 }
+/* Influencerlist */
+.l-influencer-header{
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+
+}
+.i-display-content{
+  background: #fff;
+  padding: 0;
+}
+.i-left-content{
+
+}
